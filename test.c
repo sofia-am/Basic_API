@@ -54,17 +54,20 @@ int main(void) {
   ulfius_add_endpoint_by_val(&instance, "POST", "/increment", NULL, 0, &callback_set, NULL);
 
   // Start the framework
-  if (ulfius_start_framework(&instance) == U_OK && ulfius_start_framework(&instance)) {
+  if (ulfius_start_framework(&instance) == U_OK) {
     printf("Start framework on port %d\n", instance.port);
     // Wait for the user to press <enter> on the console to quit the application
-    getchar();
+    //getchar();
   } else {
     fprintf(stderr, "Error starting framework\n");
   }
-  printf("End framework\n");
+  while(1){
+    
+  }
+  //printf("End framework\n");
 
-  ulfius_stop_framework(&instance);
-  ulfius_clean_instance(&instance);
+  //ulfius_stop_framework(&instance);
+  //ulfius_clean_instance(&instance);
 
-  return 0;
+  //return 0;
 }

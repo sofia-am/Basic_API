@@ -1,0 +1,10 @@
+[Unit]
+Description=Servicio que corre el servidor
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/main
+
+[Install]
+WantedBy=multi-user.target
