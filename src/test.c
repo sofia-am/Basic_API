@@ -61,8 +61,11 @@ int main(void) {
   } else {
     fprintf(stderr, "Error starting framework\n");
   }
+
+  // TODO: tratar de encapsular el codigo para que trate a los clientes de forma distinta
+  
   while(1){
-    
+
   }
   //printf("End framework\n");
 

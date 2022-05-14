@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sat May 14 15:08:13 2022
+# Make data base, printed on Sat May 14 16:41:41 2022
 
 # Variables
 
@@ -22,6 +23,8 @@ DESKTOP_SESSION = ubuntu
 .SHELLFLAGS := -c
 # environment
 XDG_SESSION_CLASS = user
+# makefile (from 'makefile', line 4)
+SRC = src
 # environment
 XDG_SESSION_TYPE = x11
 # environment
@@ -42,6 +45,8 @@ XMODIFIERS = @im=ibus
 CURDIR := /home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am
 # makefile
 SHELL = /bin/sh
+# makefile (from 'makefile', line 5)
+BIN = bin
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
@@ -68,6 +73,8 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
+# makefile (from 'makefile', line 3)
+OBJS = obj
 # environment
 MANAGERPID = 1581
 # environment
@@ -100,6 +107,8 @@ VSCODE_LOG_STACK = false
 ELECTRON_RUN_AS_NODE = 1
 # environment
 INVOCATION_ID = 93398601745b42f88464eec8be337b74
+# makefile (from 'makefile', line 7)
+LIB = lib
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -146,6 +155,8 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
+# makefile (from 'makefile', line 8)
+DEP = inc/dependencies.h
 # environment
 LC_TIME = es_AR.UTF-8
 # default
@@ -180,6 +191,8 @@ LESS = -R
 LC_TELEPHONE = es_AR.UTF-8
 # default
 MAKE_COMMAND := make
+# makefile (from 'makefile', line 6)
+INC = inc
 # environment
 OLDPWD = /home/sofia
 # default
@@ -218,6 +231,8 @@ LC_ALL = C
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # automatic
 ^F = $(notdir $^)
+# makefile (from 'makefile', line 9)
+WHERE = -Wl,-rpath,.
 # default
 SUFFIXES := 
 # environment
@@ -237,7 +252,7 @@ LANG = C
 # environment
 VSCODE_PID = 6714
 # variable set hash-table stats:
-# Load=113/1024=11%, Rehash=0, Collisions=17/143=12%
+# Load=120/1024=12%, Rehash=0, Collisions=20/154=13%
 
 # Pattern-specific Variable Values
 
@@ -245,9 +260,9 @@ VSCODE_PID = 6714
 
 # Directories
 
-# . (device 66310, inode 1443860): 11 files, no impossibilities.
+# . (device 66310, inode 1443860): 17 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -255,14 +270,42 @@ VSCODE_PID = 6714
 
 # Files
 
-all: main
+all: mkdir main
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/8=0%
+
+mkdir:
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := mkdir
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+ 
+# Load=8/32=25%, Rehash=0, Collisions=4/16=25%
+#  recipe to execute (from 'makefile', line 14):
+	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
 
 # Not a target:
 .SUFFIXES:
@@ -273,10 +316,9 @@ all: main
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-14 10:01:35.253083424
+#  Last modified 2022-05-14 16:41:38.313708661
 #  File has been updated.
 #  Successfully updated.
- 
 
 # Not a target:
 .DEFAULT:
@@ -284,71 +326,47 @@ makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-test.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-05-14 10:01:26.061716641
-#  File has been updated.
-#  Successfully updated.
-
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 15):
+#  recipe to execute (from 'makefile', line 23):
 	rm -rf main main.o
+
+# Not a target:
+src/test.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 main: main.o
 #  Implicit rule search has not been done.
-#  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
-#  recipe to execute (from 'makefile', line 12):
-	$(CC) $< -lulfius -o $@
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 20):
+	$(CC) $(OBJS)/$< -lulfius -o $@
 
-main.o: test.c
+main.o: src/test.c
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
-#  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := main.o
-# automatic
-# % := 
-# automatic
-# * := 
-# automatic
-# + := test.c
-# automatic
-# | := 
-# automatic
-# < := test.c
-# automatic
-# ^ := test.c
-# automatic
-# ? := test.c
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
-#  recipe to execute (from 'makefile', line 9):
-	$(CC) $(CFLAGS) -c -lulfius $< -o $@
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 17):
+	$(CC) $(CFLAGS) -c -lulfius $< -o $(OBJS)/$@
 
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/24=0%
+# Load=9/1024=1%, Rehash=0, Collisions=0/27=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 19 / storage = 162 B / avg = 8 B
-# current buf: size = 8162 B / used = 162 B / count = 19 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 26 / storage = 205 B / avg = 7 B
+# current buf: size = 8162 B / used = 205 B / count = 26 / avg = 7 B
 
-# strcache performance: lookups = 32 / hit rate = 40%
+# strcache performance: lookups = 41 / hit rate = 36%
 # hash-table stats:
-# Load=19/8192=0%, Rehash=0, Collisions=1/32=3%
-# Finished Make data base on Sat May 14 15:08:13 2022
+# Load=26/8192=0%, Rehash=0, Collisions=1/41=2%
+# Finished Make data base on Sat May 14 16:41:41 2022
 
  
