@@ -8,11 +8,31 @@ server {
 	server_name contadordeusuarios.com;
 	auth_basic "admin area";
 	auth_basic_user_file /etc/apache2/.htpasswd;
+
 	location = /contador/value{
-		proxy_pass http://localhost:8537/imprimir;
+		proxy_pass http://localhost:8537/print_cont;
+	}
+
+	location = /contador/increment{
+		proxy_pass http://localhost:8537/inc;
 	}
 
 	location /{
-		return 404 '{"error": {"status_code": 404,"status": "Unauthorized"}}';
+		return 404 '{ "error": {"status_code": 404,"status": "Not Found"}}';
+	}
+}
+
+server {
+	listen 80;	
+	server_name lab3.com;
+	auth_basic "admin area";
+	auth_basic_user_file /etc/apache2/.htpasswd;
+	
+	location = /api/users{
+		proxy_pass http://localhost:8537/usuario;
+	}
+
+	location /{
+		return 404 '{ "error": {"status_code": 404,"status": "Not Found"}}';
 	}
 }

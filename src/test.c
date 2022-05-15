@@ -100,8 +100,8 @@ int main(void) {
   // Endpoint list declaration
   ulfius_add_endpoint_by_val(&instance, "GET", "/print_cont", NULL, 0, &devolver_contador, NULL);
   ulfius_add_endpoint_by_val(&instance, "GET", "/usuario", NULL, 0, &listar_usuarios, NULL);
-  ulfius_add_endpoint_by_val(&instance, "POST", "/usuario", NULL, 0, &incrementar_contador, NULL);
-  ulfius_add_endpoint_by_val(&instance, "POST", "/add_usr", NULL, 0, &agregar_usuario, NULL);
+  ulfius_add_endpoint_by_val(&instance, "POST", "/inc", NULL, 0, &incrementar_contador, NULL);
+  ulfius_add_endpoint_by_val(&instance, "POST", "/usuario", NULL, 0, &agregar_usuario, NULL);
 
   // Start the framework
   if (ulfius_start_framework(&instance) == U_OK) {
