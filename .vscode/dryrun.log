@@ -1,7 +1,7 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory '/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am'
 mkdir -p src bin lib obj inc
-gcc  -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion -Werror  -c -lulfius src/test.c -o obj/main.o
-gcc  obj/main.o -lulfius -o main
+gcc  -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion  -c -lulfius -ljansson src/test.c -o obj/main.o
+gcc  obj/main.o -lulfius -ljansson -o main
 make: Leaving directory '/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am'
  

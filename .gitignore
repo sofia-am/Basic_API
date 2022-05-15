@@ -1,3 +1,6 @@
+/.vscode
+/ulfius
+/vcpkg
 # Prerequisites
 *.d
 
@@ -51,4 +54,3 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-.vscode/
