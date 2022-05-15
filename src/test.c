@@ -5,6 +5,7 @@
  * gcc -o test test.c -lulfius
  */
 #include <stdio.h>
+#include <string.h>
 #include <ulfius.h>
 #include <jansson.h>
 
@@ -47,37 +48,40 @@ char * print_map(const struct _u_map * map) {
 /**
  * Callback function for the web application on /prueba url call
  */
-int callback_set(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data) {
-  //acumulador++;
-  char *url_params = print_map(request->map_url), *headers = print_map(request->map_header), *post_params = print_map(request->map_post_body);
-  char *response_body;
-  printf("La información que obtuve es: \nurl_params: %s, \nheaders: \n%s, \npost_params: \n%s", url_params, headers, post_params);
-  return U_CALLBACK_CONTINUE;
+int incrementar_contador(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data) {
+  acumulador++;
+
   ulfius_set_string_body_response(response, 200, "Ok\n");
   return U_CALLBACK_CONTINUE;
 }
 
-int callback_get(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data){
+int devolver_contador(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data){
   char *string = malloc(sizeof(char)*30);
   sprintf(string, "El valor del contador es %d\n", acumulador);
   ulfius_set_string_body_response(response, 200, string);
   return U_CALLBACK_CONTINUE;
 }
 
-int callback_test (const struct _u_request * request, struct _u_response * response, void * user_data) {
-  char *url_params = print_map(request->map_url), *headers = print_map(request->map_header); //*post_params = print_map(request->map_post_body);
-  char *response_body;
+int agregar_usuario(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data){
+  acumulador++;
+
+  ulfius_set_string_body_response(response, 200, "Ok\n");
+  return U_CALLBACK_CONTINUE;
+}
+
+int listar_usuarios(__attribute__((unused))const struct _u_request * request, struct _u_response * response,__attribute__((unused)) void * user_data) {
+/*   char *url_params = print_map(request->map_url), *headers = print_map(request->map_header); //*post_params = print_map(request->map_post_body);
   printf("La información que obtuve es: \nurl_params: %s, \nheaders: \n%s, \n", url_params, headers);
   json_t *params = json_object();
   json_error_t * error;
   params = ulfius_get_json_body_request(request, error);
   const char *key;
   json_t *value;
-  size_t len;
 
   json_object_foreach(params, key, value){
       printf("Par clave valor: |%s||%s|\n", key, json_string_value(value));
-  }
+  } */
+  ulfius_set_string_body_response(response, 200, "Ok\n");
   return U_CALLBACK_CONTINUE;
 }
 /**
@@ -94,9 +98,10 @@ int main(void) {
   }
 
   // Endpoint list declaration
-  ulfius_add_endpoint_by_val(&instance, "GET", "/imprimir", NULL, 0, &callback_get, NULL);
-  ulfius_add_endpoint_by_val(&instance, "POST", "/increment", NULL, 0, &callback_set, NULL);
-  ulfius_add_endpoint_by_val(&instance, "POST", "/add", NULL, 0, &callback_test, NULL);
+  ulfius_add_endpoint_by_val(&instance, "GET", "/print_cont", NULL, 0, &devolver_contador, NULL);
+  ulfius_add_endpoint_by_val(&instance, "GET", "/usuario", NULL, 0, &listar_usuarios, NULL);
+  ulfius_add_endpoint_by_val(&instance, "POST", "/usuario", NULL, 0, &incrementar_contador, NULL);
+  ulfius_add_endpoint_by_val(&instance, "POST", "/add_usr", NULL, 0, &agregar_usuario, NULL);
 
   // Start the framework
   if (ulfius_start_framework(&instance) == U_OK) {
