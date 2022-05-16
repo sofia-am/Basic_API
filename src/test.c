@@ -16,7 +16,7 @@ int acumulador;
 /**
  * Decode a u_map into a string
  */
-char * print_map(const struct _u_map * map) {
+/* char * print_map(const struct _u_map * map) {
   char * line, * to_return = NULL;
   const char **keys, * value;
   int len, i;
@@ -44,13 +44,14 @@ char * print_map(const struct _u_map * map) {
   } else {
     return NULL;
   }
-}
+} */
 
 /**
  * Callback function for the web application on /prueba url call
  */
 int incrementar_contador(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data) {
   acumulador++;
+
 
   ulfius_set_string_body_response(response, 200, "Ok\n");
   return U_CALLBACK_CONTINUE;
@@ -59,7 +60,13 @@ int incrementar_contador(__attribute__((unused))const struct _u_request * reques
 int devolver_contador(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data){
   char *string = malloc(sizeof(char)*30);
   sprintf(string, "El valor del contador es %d\n", acumulador);
-  ulfius_set_string_body_response(response, 200, string);
+  
+  json_t *respuesta = json_object();
+
+  json_object_set(respuesta, "code", json_integer(200));
+  json_object_set(respuesta, "description", json_integer(acumulador));
+
+  ulfius_set_json_body_response(response, 200, respuesta);
   return U_CALLBACK_CONTINUE;
 }
 
