@@ -9,6 +9,7 @@
 #include <ulfius.h>
 #include <jansson.h>
 #include <pwd.h>
+#include <time.h>
 
 #define PORT 8538
 
@@ -101,7 +102,7 @@ int agregar_usuario(__attribute__((unused))const struct _u_request * request, st
     printf("password %s | user %s\n", password, user);
     struct passwd *usuarios = getpwent();
     usuarios = getpwnam(user); //chequeamos si no existe un usuario con ese nombre
-    
+
     if(usuarios != NULL){
       ulfius_set_string_body_response(response, 409,"{ \"error\": {\"status_code\": 409,\"status\": \"User already exists\"}}");
       return U_CALLBACK_CONTINUE;
@@ -112,20 +113,26 @@ int agregar_usuario(__attribute__((unused))const struct _u_request * request, st
     system(command);
 
     usuarios = getpwnam(user);
-    printf("user ID: %lu\n", usuarios->pw_uid);
+    //printf("user ID: %lu\n", usuarios->pw_uid);
+
+    time_t t;
+    t = time(NULL);
+    struct tm tm = *localtime(&t);
+    char *time_string = malloc(sizeof(char)*20);
+    sprintf(time_string, "%d-%d-%d %d:%d:%d", tm.tm_year+1900,  tm.tm_mon+1,  tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
     json_t *respuesta = json_object();
-    json_object_set(response, "id", json_integer(usuarios->pw_uid));
-    json_object_set(response, "username", json_string(user));
-    //json_object_set(response, "created_at", json_integer());
+    json_object_set(respuesta, "id", json_integer(usuarios->pw_uid));
+    json_object_set(respuesta, "username", json_string(user));
+    json_object_set(respuesta, "created_at", json_string(time_string));
+
+    ulfius_set_json_body_response(response, 200, respuesta);
+    return U_CALLBACK_CONTINUE;
 
   }else{
     ulfius_set_string_body_response(response, 409,"{ \"error\": {\"status_code\": 409,\"status\":\"Invalid username/password\"}}");
     return U_CALLBACK_CONTINUE;
   }
-
-  ulfius_set_string_body_response(response, 200, "OK\n");
-  return U_CALLBACK_CONTINUE;
 }
 
 int listar_usuarios(__attribute__((unused))const struct _u_request * request, struct _u_response * response,__attribute__((unused)) void * user_data) {
