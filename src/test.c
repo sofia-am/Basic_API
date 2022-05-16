@@ -73,13 +73,13 @@ int agregar_usuario(__attribute__((unused))const struct _u_request * request, st
 int listar_usuarios(__attribute__((unused))const struct _u_request * request, struct _u_response * response,__attribute__((unused)) void * user_data) {
   int status;
   json_t *usuarios = json_object();
-  json_t *array = json_array();
+  json_t *array = json_object();
   char *data = "data";
-  json_t *root = json_string(data);
+  //json_t *root = json_string(data);
   struct passwd *p;
 
-  if((status = json_array_append(array, root)) == -1){
-    perror("Error al insertar valor dentro del array");
+  if((status = json_object_set(array, data, usuarios)) == -1){
+    perror("Error al insertar valor");
   }
 
   setpwent();
@@ -93,9 +93,9 @@ int listar_usuarios(__attribute__((unused))const struct _u_request * request, st
     }
   }
 
-  if((status = json_array_append(array, usuarios)) == -1){
+/*   if((status = json_array_append(array, usuarios)) == -1){
     perror("Error al insertar valores dentro del array");
-  }
+  } */
   
   ulfius_set_json_body_response(response, 200, array);
   if(status == -1){
