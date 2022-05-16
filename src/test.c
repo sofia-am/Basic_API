@@ -85,22 +85,25 @@ int listar_usuarios(__attribute__((unused))const struct _u_request * request, st
   int status;
   json_t *usuarios = json_object();
   struct passwd *p;
-  
+  setpwent();
+
   while((p = getpwent())) {
     json_t *value = json_real((double)(p->pw_uid));
     status = json_object_set(usuarios, p->pw_name, value);
+   
     if(status == -1){
       perror("Error al crear JSON de usuarios");
       exit(1);
     }
   }
-  
+
   ulfius_set_json_body_response(response, 200, usuarios);
   if(status == -1){
       perror("Error al setear respuesta");
       exit(1);
   }
 
+  free(usuarios);
   return U_CALLBACK_CONTINUE;
 }
 /**

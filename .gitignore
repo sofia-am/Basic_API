@@ -4,6 +4,7 @@
 dummy.c 
 TODO.md 
 print_passwd
+main
 .*
 # Prerequisites
 *.d
