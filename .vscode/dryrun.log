@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am'
 mkdir -p src bin lib obj inc
 gcc  -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion  -c -lulfius -ljansson src/test.c -o obj/main.o

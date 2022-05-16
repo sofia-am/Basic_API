@@ -10,7 +10,7 @@
 #include <jansson.h>
 #include <pwd.h>
 
-#define PORT 8537
+#define PORT 8538
 
 int acumulador;
 /**
@@ -71,22 +71,18 @@ int agregar_usuario(__attribute__((unused))const struct _u_request * request, st
 }
 
 int listar_usuarios(__attribute__((unused))const struct _u_request * request, struct _u_response * response,__attribute__((unused)) void * user_data) {
-/*   char *url_params = print_map(request->map_url), *headers = print_map(request->map_header); //*post_params = print_map(request->map_post_body);
-  printf("La información que obtuve es: \nurl_params: %s, \nheaders: \n%s, \n", url_params, headers);
-  json_t *params = json_object();
-  json_error_t * error;
-  params = ulfius_get_json_body_request(request, error);
-  const char *key;
-  json_t *value;
-
-  json_object_foreach(params, key, value){
-      printf("Par clave valor: |%s||%s|\n", key, json_string_value(value));
-  } */
   int status;
   json_t *usuarios = json_object();
+  json_t *array = json_array();
+  char *data = "data";
+  json_t *root = json_string(data);
   struct passwd *p;
-  setpwent();
 
+  if((status = json_array_append(array, root)) == -1){
+    perror("Error al insertar valor dentro del array");
+  }
+
+  setpwent();
   while((p = getpwent())) {
     json_t *value = json_real((double)(p->pw_uid));
     status = json_object_set(usuarios, p->pw_name, value);
@@ -97,12 +93,17 @@ int listar_usuarios(__attribute__((unused))const struct _u_request * request, st
     }
   }
 
-  ulfius_set_json_body_response(response, 200, usuarios);
+  if((status = json_array_append(array, usuarios)) == -1){
+    perror("Error al insertar valores dentro del array");
+  }
+  
+  ulfius_set_json_body_response(response, 200, array);
   if(status == -1){
       perror("Error al setear respuesta");
       exit(1);
   }
 
+  free(array);
   free(usuarios);
   return U_CALLBACK_CONTINUE;
 }
@@ -115,7 +116,7 @@ int main(void) {
 
   // Initialize instance with the port number
   if (ulfius_init_instance(&instance, PORT, NULL, NULL) != U_OK) {
-    fprintf(stderr, "Error al inicializar instancia (GET)\n");
+    fprintf(stderr, "Error al inicializar instancia \n");
     return(1);
   }
 
@@ -132,6 +133,7 @@ int main(void) {
     //getchar();
   } else {
     fprintf(stderr, "Error starting framework\n");
+    exit(0);
   }
   
   while(1){

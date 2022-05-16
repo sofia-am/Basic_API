@@ -1,73 +1,39 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # GNU Make 4.2.1
- 
 # Built for x86_64-pc-linux-gnu
- 
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
- 
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
- 
 # This is free software: you are free to change and redistribute it.
- 
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
- 
-# Make data base, printed on Sun May 15 17:08:47 2022
- 
+# Make data base, printed on Mon May 16 07:32:28 2022
 
 # Variables
- 
 
- 
 # 'override' directive
- 
 GNUMAKEFLAGS := 
- 
 # automatic
- 
 <D = $(patsubst %/,%,$(dir $<))
- 
 # automatic
- 
 ?F = $(notdir $?)
- 
 # environment
- 
 DESKTOP_SESSION = ubuntu
- 
 # default
- 
 .SHELLFLAGS := -c
- 
 # environment
- 
 XDG_SESSION_CLASS = user
- 
 # makefile (from 'makefile', line 4)
- 
 SRC = src
- 
 # environment
- 
 XDG_SESSION_TYPE = x11
- 
 # environment
- 
 VSCODE_LOG_NATIVE = false
- 
 # automatic
- 
 ?D = $(patsubst %/,%,$(dir $?))
- 
 # environment
- 
 IM_CONFIG_PHASE = 1
- 
 # automatic
- 
 @D = $(patsubst %/,%,$(dir $@))
- 
 # environment
 XAUTHORITY = /run/user/1000/gdm/Xauthority
 # environment
@@ -87,7 +53,7 @@ _ = /usr/share/code/code
 # makefile (from 'makefile', line 2)
 CFLAGS = -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion 
 # environment
-JOURNAL_STREAM = 8:52389
+JOURNAL_STREAM = 8:53051
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -109,11 +75,11 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'makefile', line 3)
 OBJS = obj
 # environment
-MANAGERPID = 1581
+MANAGERPID = 1860
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-9de020d1-0e34-4d78-ab75-155554a2ec07.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-75809344-c38c-472d-ab89-5ea2f4d297f8.sock
 # environment
 LC_NAME = es_AR.UTF-8
 # environment
@@ -129,7 +95,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/ideapad:@/tmp/.ICE-unix/1977,unix/ideapad:/tmp/.ICE-unix/1977
+SESSION_MANAGER = local/ideapad:@/tmp/.ICE-unix/2078,unix/ideapad:/tmp/.ICE-unix/2078
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -139,7 +105,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 93398601745b42f88464eec8be337b74
+INVOCATION_ID = a06f61bd24e64829af4a2c3339281358
 # makefile (from 'makefile', line 7)
 LIB = lib
 # default
@@ -151,7 +117,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 20083
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2585
 # automatic
 %F = $(notdir $%)
 # environment
@@ -163,7 +129,7 @@ PWD = /home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1939
+SSH_AGENT_PID = 2040
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -283,11 +249,9 @@ LC_ADDRESS = es_AR.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 20083
+VSCODE_PID = 2585
 # variable set hash-table stats:
- 
 # Load=120/1024=12%, Rehash=0, Collisions=20/154=13%
- 
 
 # Pattern-specific Variable Values
 
@@ -295,9 +259,9 @@ VSCODE_PID = 20083
 
 # Directories
 
-# . (device 66310, inode 1443860): 19 files, no impossibilities.
+# . (device 66310, inode 1443860): 22 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -315,6 +279,7 @@ all: mkdir main
 # Load=0/32=0%, Rehash=0, Collisions=0/8=0%
 
 mkdir:
+ 
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
 #  File does not exist.
@@ -326,7 +291,6 @@ mkdir:
 # % := 
 # automatic
 # * := 
- 
 # automatic
 # + := 
 # automatic
@@ -396,12 +360,12 @@ main.o: src/test.c
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 218 B / avg = 7 B
-# current buf: size = 8162 B / used = 218 B / count = 28 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 247 B / avg = 7 B
+# current buf: size = 8162 B / used = 247 B / count = 31 / avg = 7 B
 
-# strcache performance: lookups = 43 / hit rate = 34%
+# strcache performance: lookups = 46 / hit rate = 32%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=1/43=2%
-# Finished Make data base on Sun May 15 17:08:47 2022
+# Load=31/8192=0%, Rehash=0, Collisions=1/46=2%
+# Finished Make data base on Mon May 16 07:32:28 2022
 
  
