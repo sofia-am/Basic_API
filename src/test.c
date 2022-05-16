@@ -100,26 +100,25 @@ int agregar_usuario(__attribute__((unused))const struct _u_request * request, st
   if(validarString(user) && validarString(user)){
     printf("password %s | user %s\n", password, user);
     struct passwd *usuarios = getpwent();
-    struct passwd nuevo_usuario;
     usuarios = getpwnam(user); //chequeamos si no existe un usuario con ese nombre
+    
     if(usuarios != NULL){
       ulfius_set_string_body_response(response, 409,"{ \"error\": {\"status_code\": 409,\"status\": \"User already exists\"}}");
       return U_CALLBACK_CONTINUE;
     }
-    nuevo_usuario.pw_name = user;
-    nuevo_usuario.pw_passwd = password;
 
-    do_setuid();
-    FILE *f = fopen("/etc/passwd", "a");
-    undo_setuid();
+    char *command = malloc(sizeof(char)*40);
+    sprintf(command, "sudo useradd -p %s %s", password, user);
+    system(command);
 
-    if(f != NULL){
-      putpwent(&nuevo_usuario, f);
-      fclose(f);
-    }else{
-      perror("Error al abrir el archivo");
-      exit(1);
-    }
+    usuarios = getpwnam(user);
+    printf("user ID: %lu\n", usuarios->pw_uid);
+
+    json_t *respuesta = json_object();
+    json_object_set(response, "id", json_integer(usuarios->pw_uid));
+    json_object_set(response, "username", json_string(user));
+    //json_object_set(response, "created_at", json_integer());
+
   }else{
     ulfius_set_string_body_response(response, 409,"{ \"error\": {\"status_code\": 409,\"status\":\"Invalid username/password\"}}");
     return U_CALLBACK_CONTINUE;
