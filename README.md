@@ -55,8 +55,8 @@ Endpoints para la creación de usuario en el sistema operativo:
 Request
 ```C    
         curl --request POST \
-            --url http:// {server}}/api/users \
-            -u USER:SECRET \
+            --url http://lab3.com/api/users \
+            -u user1:root \
             --header 'accept: application/json' \
             --header 'content-type: application/json' \
             --data '{"username": "myuser", "password": "mypassword"}'

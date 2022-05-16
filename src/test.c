@@ -13,54 +13,71 @@
 #define PORT 8538
 
 int acumulador;
-/**
- * Decode a u_map into a string
- */
-/* char * print_map(const struct _u_map * map) {
-  char * line, * to_return = NULL;
-  const char **keys, * value;
-  int len, i;
-  if (map != NULL) {
-    keys = u_map_enum_keys(map);
-    for (i=0; keys[i] != NULL; i++) {
-      value = u_map_get(map, keys[i]);
-      len = snprintf(NULL, 0, "key is %s, value is %s", keys[i], value);
-      line = malloc((len+1)*sizeof(char));
-      snprintf(line, (len+1), "key is %s, value is %s", keys[i], value);
-      if (to_return != NULL) {
-        len = strlen(to_return) + strlen(line) + 1;
-        to_return = realloc(to_return, (len+1)*sizeof(char));
-        if (strlen(to_return) > 0) {
-          strcat(to_return, "\n");
-        }
-      } else {
-        to_return = malloc((strlen(line) + 1)*sizeof(char));
-        to_return[0] = 0;
-      }
-      strcat(to_return, line);
-      free(line);
+static uid_t euid, ruid;
+/*Chequea si la string ingresada tiene caracteres entre [A-Za-z0-9].
+  Retorna 1 si cumple, 0 si tiene otros caracteres.
+*/
+int validarString(char *string){
+  int i;
+  for (i = 0; string[i] != '\0'; i++)
+  {
+    if (!(string[i] >= 65 && string[i] <= 90) && !(string[i] >= 97 && string[i] <= 122) && !(string[i] >= 48 && string[i] <= 57))
+    {
+      return 0;
     }
-    return to_return;
-  } else {
-    return NULL;
   }
-} */
+  return 1;
+}
+
+/* Set the effective UID to the real UID. */
+void do_setuid (void)
+{
+  int status;
+
+#ifdef _POSIX_SAVED_IDS
+  status = seteuid (euid);
+#else
+  status = setreuid (ruid, euid);
+#endif
+  if (status < 0) {
+    fprintf (stderr, "Couldn't set uid.\n");
+    exit (status);
+    }
+}
+
+/* Restore the effective UID to its original value. */
+void undo_setuid (void)
+{
+  int status;
+
+#ifdef _POSIX_SAVED_IDS
+  status = seteuid (ruid);
+#else
+  status = setreuid (euid, ruid);
+#endif
+  if (status < 0) {
+    fprintf (stderr, "Couldn't unset uid.\n");
+    exit (status);
+    }
+}
 
 /**
  * Callback function for the web application on /prueba url call
  */
 int incrementar_contador(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data) {
   acumulador++;
+/*   json_t *request = json_object();
+  request = ulfius_get_json_body_request(); */
+  json_t *respuesta = json_object();
 
+  json_object_set(respuesta, "code", json_integer(200));
+  json_object_set(respuesta, "description", json_integer(acumulador));
 
-  ulfius_set_string_body_response(response, 200, "Ok\n");
+  ulfius_set_json_body_response(response, 200, respuesta);
   return U_CALLBACK_CONTINUE;
 }
 
 int devolver_contador(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data){
-  char *string = malloc(sizeof(char)*30);
-  sprintf(string, "El valor del contador es %d\n", acumulador);
-  
   json_t *respuesta = json_object();
 
   json_object_set(respuesta, "code", json_integer(200));
@@ -72,8 +89,43 @@ int devolver_contador(__attribute__((unused))const struct _u_request * request, 
 
 int agregar_usuario(__attribute__((unused))const struct _u_request * request, struct _u_response * response, __attribute__((unused))void * user_data){
   acumulador++;
+  json_t *json_request = json_object();
+  json_error_t error;
+  json_request = ulfius_get_json_body_request(request, &error);
+  //json_t *value = json_object();
+  //printf("Valores: nombre: %s | pass %s\n", json_string_value(json_object_get(json_request, "username")), json_string_value(json_object_get(json_request, "password")));
+  char *user = json_string_value(json_object_get(json_request, "username"));
+  char *password =json_string_value(json_object_get(json_request, "password"));
 
-  ulfius_set_string_body_response(response, 200, "Ok\n");
+  if(validarString(user) && validarString(user)){
+    printf("password %s | user %s\n", password, user);
+    struct passwd *usuarios = getpwent();
+    struct passwd nuevo_usuario;
+    usuarios = getpwnam(user); //chequeamos si no existe un usuario con ese nombre
+    if(usuarios != NULL){
+      ulfius_set_string_body_response(response, 409,"{ \"error\": {\"status_code\": 409,\"status\": \"User already exists\"}}");
+      return U_CALLBACK_CONTINUE;
+    }
+    nuevo_usuario.pw_name = user;
+    nuevo_usuario.pw_passwd = password;
+
+    do_setuid();
+    FILE *f = fopen("/etc/passwd", "a");
+    undo_setuid();
+
+    if(f != NULL){
+      putpwent(&nuevo_usuario, f);
+      fclose(f);
+    }else{
+      perror("Error al abrir el archivo");
+      exit(1);
+    }
+  }else{
+    ulfius_set_string_body_response(response, 409,"{ \"error\": {\"status_code\": 409,\"status\":\"Invalid username/password\"}}");
+    return U_CALLBACK_CONTINUE;
+  }
+
+  ulfius_set_string_body_response(response, 200, "OK\n");
   return U_CALLBACK_CONTINUE;
 }
 
@@ -91,7 +143,7 @@ int listar_usuarios(__attribute__((unused))const struct _u_request * request, st
 
   setpwent();
   while((p = getpwent())) {
-    json_t *value = json_real((double)(p->pw_uid));
+    json_t *value = json_integer(p->pw_uid);
     status = json_object_set(usuarios, p->pw_name, value);
    
     if(status == -1){
@@ -120,6 +172,9 @@ int listar_usuarios(__attribute__((unused))const struct _u_request * request, st
 int main(void) {
   struct _u_instance instance;
   acumulador = 0;
+  ruid = getuid();
+  euid = 0;
+  undo_setuid();
 
   // Initialize instance with the port number
   if (ulfius_init_instance(&instance, PORT, NULL, NULL) != U_OK) {
