@@ -8,6 +8,7 @@
 #include <string.h>
 #include <ulfius.h>
 #include <jansson.h>
+#include <pwd.h>
 
 #define PORT 8537
 
@@ -81,7 +82,25 @@ int listar_usuarios(__attribute__((unused))const struct _u_request * request, st
   json_object_foreach(params, key, value){
       printf("Par clave valor: |%s||%s|\n", key, json_string_value(value));
   } */
-  ulfius_set_string_body_response(response, 200, "Ok\n");
+  int status;
+  json_t *usuarios = json_object();
+  struct passwd *p;
+  
+  while((p = getpwent())) {
+    json_t *value = json_real((double)(p->pw_uid));
+    status = json_object_set(usuarios, p->pw_name, value);
+    if(status == -1){
+      perror("Error al crear JSON de usuarios");
+      exit(1);
+    }
+  }
+  
+  ulfius_set_json_body_response(response, 200, usuarios);
+  if(status == -1){
+      perror("Error al setear respuesta");
+      exit(1);
+  }
+
   return U_CALLBACK_CONTINUE;
 }
 /**
@@ -111,8 +130,6 @@ int main(void) {
   } else {
     fprintf(stderr, "Error starting framework\n");
   }
-
-  // TODO: tratar de encapsular el codigo para que trate a los clientes de forma distinta
   
   while(1){
 

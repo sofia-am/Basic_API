@@ -1,6 +1,10 @@
 /.vscode
 /ulfius
 /vcpkg
+dummy.c 
+TODO.md 
+print_passwd
+.*
 # Prerequisites
 *.d
 
