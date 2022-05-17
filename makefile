@@ -14,10 +14,10 @@ mkdir:
 	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
 
 main.o: $(SRC)/test.c
-	$(CC) $(CFLAGS) -c -lulfius -ljansson $< -o $(OBJS)/$@
+	$(CC) $(CFLAGS) -c $< -o $(OBJS)/$@
 
 main: main.o
-	$(CC) $(OBJS)/$< -lulfius -ljansson -o $@
+	$(CC) $(OBJS)/$< -lulfius -ljansson -lyder -o $@
 
 clean:
 	rm -rf main main.o
