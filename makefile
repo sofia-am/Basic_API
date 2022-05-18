@@ -9,7 +9,7 @@ DEP = inc/dependencies.h
 WHERE = -Wl,-rpath,.
 
 all: mkdir main
-
+#TODO: escribir los archivos de configuracion en las ubicaciones correspondientes
 mkdir:
 	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
 

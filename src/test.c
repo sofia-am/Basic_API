@@ -165,33 +165,44 @@ int agregar_usuario(__attribute__((unused)) const struct _u_request *request, st
 int listar_usuarios(__attribute__((unused)) const struct _u_request *request, struct _u_response *response, __attribute__((unused)) void *user_data)
 {
   int status;
-  json_t *usuarios = json_object();
-  json_t *array = json_object();
+  json_t *array = json_array();
   char *data = "data";
+  json_t *respuesta = json_object();
+  //json_t *root = json_string(data);
   int i = 0;
   struct passwd *p;
-
-  if ((status = json_object_set(array, data, usuarios)) == -1)
+/* 
+  if ((status =  json_array_append(array, root)) == -1)
   {
     perror("Error al insertar valor");
-  }
+    exit(1);
+  } */
 
   setpwent();
   while ((p = getpwent()))
   {
-    json_t *value = json_integer(p->pw_uid);
-    status = json_object_set(usuarios, p->pw_name, value);
+    json_t *usuarios = json_object();
+    status = json_object_set(usuarios, "user_id", json_integer(p->pw_uid)); 
+    status = json_object_set(usuarios, "username", json_string(p->pw_name));
     i++;
-    if (status == -1)
+    if(status == -1)
     {
       perror("Error al crear JSON de usuarios");
       exit(1);
     }
+    if((status = json_array_append(array, usuarios)) == -1)
+    {
+      perror("Error al insertar valores dentro del array");
+      exit(1);
+    }
   }
+  endpwent();
 
+  json_object_set(respuesta, data, array);
+  
   y_log_message(Y_LOG_LEVEL_INFO, "Usuarios creados: %d", i);
 
-  ulfius_set_json_body_response(response, 200, array);
+  ulfius_set_json_body_response(response, 200, respuesta);
   if (status == -1)
   {
     perror("Error al setear respuesta");
@@ -199,7 +210,7 @@ int listar_usuarios(__attribute__((unused)) const struct _u_request *request, st
   }
 
   free(array);
-  free(usuarios);
+  //free(usuarios);
   return U_CALLBACK_CONTINUE;
 }
 
@@ -208,7 +219,7 @@ int listar_usuarios(__attribute__((unused)) const struct _u_request *request, st
  */
 int main(void)
 {
-  y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/src/log_info.log", "Inicializando el log");
+  y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/log/log_info.log", "Inicializando el log");
 
   struct _u_instance instance;
   acumulador = 0;
@@ -245,6 +256,9 @@ int main(void)
   while (1)
   {
   }
+
+  // TODO: signal handling para cerrar los archivos
+  
   // printf("End framework\n");
 
   // ulfius_stop_framework(&instance);
