@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <signal.h>
 #include <string.h>
+#include <unistd.h>
 #include <ulfius.h>
 #include <jansson.h>
 #include <pwd.h>
@@ -10,6 +12,7 @@
 
 int acumulador;
 static uid_t euid, ruid;
+struct _u_instance instance;
 /*Chequea si la string ingresada tiene caracteres entre [A-Za-z0-9].
   Retorna 1 si cumple, 0 si tiene otros caracteres.
 */
@@ -60,6 +63,14 @@ void undo_setuid(void)
   }
 }
 
+void term(){
+  //printf("End framework\n");
+
+  ulfius_stop_framework(&instance);
+  ulfius_clean_instance(&instance);
+  y_close_logs();
+  exit(0);
+}
 /**
  * Callback function for the web application on /prueba url call
  */
@@ -111,8 +122,8 @@ int agregar_usuario(__attribute__((unused)) const struct _u_request *request, st
       return U_CALLBACK_CONTINUE;
     }
 
-    char *command = malloc(sizeof(char) * 40);
-    sprintf(command, "sudo useradd -p %s %s", password, user);
+    char *command = malloc(sizeof(char) * 60);
+    sprintf(command, "sudo useradd -p $(mkpasswd --hash=SHA-512 %s) %s", password, user);
     system(command);
 
     usuarios = getpwnam(user);
@@ -221,7 +232,6 @@ int main(void)
 {
   y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/log/log_info.log", "Inicializando el log");
 
-  struct _u_instance instance;
   acumulador = 0;
   ruid = getuid();
   euid = 0;
@@ -257,12 +267,8 @@ int main(void)
   {
   }
 
-  // TODO: signal handling para cerrar los archivos
-  
-  // printf("End framework\n");
-
-  // ulfius_stop_framework(&instance);
-  // ulfius_clean_instance(&instance);
-
-  // return 0;
+  struct sigaction action;
+  memset(&action, 0, sizeof(struct sigaction));
+  action.sa_handler = term;
+  sigaction(SIGTERM, &action, NULL);
 }
