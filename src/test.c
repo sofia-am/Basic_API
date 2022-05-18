@@ -1,9 +1,3 @@
-/**
- * test.c
- * Small Hello World! example
- * to compile with gcc, run the following command
- * gcc -o test test.c -lulfius
- */
 #include <stdio.h>
 #include <string.h>
 #include <ulfius.h>
@@ -73,11 +67,14 @@ int incrementar_contador(__attribute__((unused)) const struct _u_request *reques
 {
   acumulador++;
   json_t *respuesta = json_object();
+  struct _u_map *map = request->map_header;
+  const char *value = (char*)u_map_get(map, "X-Forwarded-For");
+  //printf("IP es %s\n", value);
 
   json_object_set(respuesta, "code", json_integer(200));
   json_object_set(respuesta, "description", json_integer(acumulador));
 
-  y_log_message(Y_LOG_LEVEL_INFO, "Usuario creado desde: ");
+  y_log_message(Y_LOG_LEVEL_INFO, "Usuario creado desde: %s", value);
   ulfius_set_json_body_response(response, 200, respuesta);
   return U_CALLBACK_CONTINUE;
 }
@@ -109,7 +106,6 @@ int agregar_usuario(__attribute__((unused)) const struct _u_request *request, st
 
     if (usuarios != NULL)
     {
-      
       y_log_message(Y_LOG_LEVEL_ERROR, "Usuario %d ya existe.", usuarios->pw_uid);
       ulfius_set_string_body_response(response, 409, "{ \"error\": {\"status_code\": 409,\"status\": \"User already exists\"}}");
       return U_CALLBACK_CONTINUE;
@@ -160,7 +156,6 @@ int agregar_usuario(__attribute__((unused)) const struct _u_request *request, st
   }
   else
   {
-
     y_log_message(Y_LOG_LEVEL_ERROR, "Usuario o password inválidos");
     ulfius_set_string_body_response(response, 409, "{ \"error\": {\"status_code\": 409,\"status\":\"Invalid username/password\"}}");
     return U_CALLBACK_CONTINUE;
@@ -213,7 +208,7 @@ int listar_usuarios(__attribute__((unused)) const struct _u_request *request, st
  */
 int main(void)
 {
-  y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "src/log_info.log", "Inicializando el log");
+  y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/src/log_info.log", "Inicializando el log");
 
   struct _u_instance instance;
   acumulador = 0;

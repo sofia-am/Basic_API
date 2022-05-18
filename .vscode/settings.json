@@ -1,6 +1,8 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
-        "pwd.h": "c"
+        "pwd.h": "c",
+        "yder.h": "c",
+        "yder-cfg.h": "c"
     }
 }

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 16 07:32:28 2022
+# Make data base, printed on Tue May 17 22:44:39 2022
 
 # Variables
 
@@ -53,7 +53,7 @@ _ = /usr/share/code/code
 # makefile (from 'makefile', line 2)
 CFLAGS = -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion 
 # environment
-JOURNAL_STREAM = 8:53051
+JOURNAL_STREAM = 8:46013
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -75,11 +75,11 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'makefile', line 3)
 OBJS = obj
 # environment
-MANAGERPID = 1860
+MANAGERPID = 1547
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-75809344-c38c-472d-ab89-5ea2f4d297f8.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-853f725c-cb40-4aec-968d-195d76a466a5.sock
 # environment
 LC_NAME = es_AR.UTF-8
 # environment
@@ -95,7 +95,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/ideapad:@/tmp/.ICE-unix/2078,unix/ideapad:/tmp/.ICE-unix/2078
+SESSION_MANAGER = local/ideapad:@/tmp/.ICE-unix/1764,unix/ideapad:/tmp/.ICE-unix/1764
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -105,7 +105,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = a06f61bd24e64829af4a2c3339281358
+INVOCATION_ID = be9f511554ca4957b9a3b0d5fdc454e3
 # makefile (from 'makefile', line 7)
 LIB = lib
 # default
@@ -117,7 +117,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2585
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2514
 # automatic
 %F = $(notdir $%)
 # environment
@@ -129,7 +129,7 @@ PWD = /home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2040
+SSH_AGENT_PID = 1726
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -249,7 +249,7 @@ LC_ADDRESS = es_AR.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2585
+VSCODE_PID = 2514
 # variable set hash-table stats:
 # Load=120/1024=12%, Rehash=0, Collisions=20/154=13%
 
@@ -259,9 +259,9 @@ VSCODE_PID = 2585
 
 # Directories
 
-# . (device 66310, inode 1443860): 22 files, no impossibilities.
+# . (device 66310, inode 1443860): 23 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -315,7 +315,7 @@ mkdir:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-15 17:06:11.200604134
+#  Last modified 2022-05-17 09:12:25.556563035
 #  File has been updated.
 #  Successfully updated.
 
@@ -343,14 +343,14 @@ main: main.o
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 20):
-	$(CC) $(OBJS)/$< -lulfius -ljansson -o $@
+	$(CC) $(OBJS)/$< -lulfius -ljansson -lyder -o $@
 
 main.o: src/test.c
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 17):
-	$(CC) $(CFLAGS) -c -lulfius -ljansson $< -o $(OBJS)/$@
+	$(CC) $(CFLAGS) -c $< -o $(OBJS)/$@
 
 # files hash-table stats:
 # Load=9/1024=1%, Rehash=0, Collisions=0/27=0%
@@ -360,12 +360,12 @@ main.o: src/test.c
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 247 B / avg = 7 B
-# current buf: size = 8162 B / used = 247 B / count = 31 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 32 / storage = 260 B / avg = 8 B
+# current buf: size = 8162 B / used = 260 B / count = 32 / avg = 8 B
 
-# strcache performance: lookups = 46 / hit rate = 32%
+# strcache performance: lookups = 47 / hit rate = 31%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=1/46=2%
-# Finished Make data base on Mon May 16 07:32:28 2022
+# Load=32/8192=0%, Rehash=0, Collisions=1/47=2%
+# Finished Make data base on Tue May 17 22:44:39 2022
 
  
