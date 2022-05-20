@@ -29,40 +29,6 @@ int validarString(char *string)
   return 1;
 }
 
-/* Set the effective UID to the real UID. */
-void do_setuid(void)
-{
-  int status;
-
-#ifdef _POSIX_SAVED_IDS
-  status = seteuid(euid);
-#else
-  status = setreuid(ruid, euid);
-#endif
-  if (status < 0)
-  {
-    fprintf(stderr, "Couldn't set uid.\n");
-    exit(status);
-  }
-}
-
-/* Restore the effective UID to its original value. */
-void undo_setuid(void)
-{
-  int status;
-
-#ifdef _POSIX_SAVED_IDS
-  status = seteuid(ruid);
-#else
-  status = setreuid(euid, ruid);
-#endif
-  if (status < 0)
-  {
-    fprintf(stderr, "Couldn't unset uid.\n");
-    exit(status);
-  }
-}
-
 void term(){
   //printf("End framework\n");
 
@@ -124,7 +90,14 @@ int agregar_usuario(__attribute__((unused)) const struct _u_request *request, st
 
     char *command = malloc(sizeof(char) * 60);
     sprintf(command, "sudo useradd -p $(mkpasswd --hash=SHA-512 %s) %s", password, user);
-    system(command);
+
+    //printf("Mi euid acá es: %d\n", geteuid());
+    if(seteuid(0) != -1){
+      system(command);
+      seteuid(1000);
+    }else{
+      perror("Error al setear UID to 0");
+    }
 
     usuarios = getpwnam(user);
 
@@ -230,13 +203,24 @@ int listar_usuarios(__attribute__((unused)) const struct _u_request *request, st
  */
 int main(void)
 {
-  y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/log/log_info.log", "Inicializando el log");
-
   acumulador = 0;
-  ruid = getuid();
-  euid = 0;
-  undo_setuid();
+  ruid = getuid(); //real uid
+/*   printf("Real User ID: %d\n", getuid());
+  printf("Effective User ID: %d\n", geteuid());
+  if(seteuid(1000) == -1){
+    perror("Error al setear euid");
+  }
+  printf("Ahora el uid es: %d\n", geteuid()); */  
+  euid = geteuid(); // effective uid
 
+
+  //if(seteuid(0) != -1){
+    seteuid(0);
+    y_init_logs("API_log", Y_LOG_MODE_FILE, Y_LOG_LEVEL_INFO, "/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/log/log_info.log", "Inicializando el log");  
+    seteuid(1000);
+    //}else{
+      //perror("Error al setear UID to 0");
+    //}
   // Initialize instance with the port number
   if (ulfius_init_instance(&instance, PORT, NULL, NULL) != U_OK)
   {
