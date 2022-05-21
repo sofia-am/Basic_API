@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Wed May 18 08:20:18 2022
+# Make data base, printed on Fri May 20 23:19:45 2022
 
 # Variables
 
@@ -54,7 +53,7 @@ _ = /usr/share/code/code
 # makefile (from 'makefile', line 2)
 CFLAGS = -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion 
 # environment
-JOURNAL_STREAM = 8:48829
+JOURNAL_STREAM = 8:54613
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -75,12 +74,14 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'makefile', line 3)
 OBJS = obj
+# makefile (from 'makefile', line 10)
+CONF = config_files
 # environment
-MANAGERPID = 1586
+MANAGERPID = 2008
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-6f6fafd8-e07c-474e-8c72-287f007f29bb.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-65551991-20d2-4a9c-9df1-99025945c0aa.sock
 # environment
 LC_NAME = es_AR.UTF-8
 # environment
@@ -96,7 +97,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/ideapad:@/tmp/.ICE-unix/1807,unix/ideapad:/tmp/.ICE-unix/1807
+SESSION_MANAGER = local/ideapad:@/tmp/.ICE-unix/2671,unix/ideapad:/tmp/.ICE-unix/2671
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -106,7 +107,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 971c2f72b6a04a92ace6f7b5866919f4
+INVOCATION_ID = 17db0c09d5e248259ca5260c1cac391d
 # makefile (from 'makefile', line 7)
 LIB = lib
 # default
@@ -118,7 +119,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 5785
+GIO_LAUNCHED_DESKTOP_FILE_PID = 31784
 # automatic
 %F = $(notdir $%)
 # environment
@@ -130,9 +131,9 @@ PWD = /home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1769
+SSH_AGENT_PID = 2633
 # environment
-ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+ORIGINAL_XDG_CURRENT_DESKTOP = Unity
 # environment
 GTK_MODULES = gail:atk-bridge
 # environment
@@ -140,7 +141,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /home/sofia
 # environment
-VSCODE_CODE_CACHE_PATH = /home/sofia/.config/Code/CachedData/da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+VSCODE_CODE_CACHE_PATH = /home/sofia/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
 LOGNAME = sofia
 # environment
@@ -200,7 +201,7 @@ OLDPWD = /home/sofia
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-965cf699-1.67.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-965cf699-1.67.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -221,6 +222,8 @@ MAKEFILES :=
 LC_NUMERIC = es_AR.UTF-8
 # automatic
 <F = $(notdir $<)
+# makefile (from 'makefile', line 11)
+NGINX = /etc/nginx/sites-available
 # environment
 LC_MEASUREMENT = es_AR.UTF-8
 # environment
@@ -250,9 +253,9 @@ LC_ADDRESS = es_AR.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5785
+VSCODE_PID = 56496
 # variable set hash-table stats:
-# Load=120/1024=12%, Rehash=0, Collisions=20/154=13%
+# Load=122/1024=12%, Rehash=0, Collisions=21/156=13%
 
 # Pattern-specific Variable Values
 
@@ -260,9 +263,9 @@ VSCODE_PID = 5785
 
 # Directories
 
-# . (device 66310, inode 1443860): 24 files, no impossibilities.
+# . (device 66310, inode 1443860): 25 files, no impossibilities.
 
-# 24 files, no impossibilities in 1 directories.
+# 25 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -270,12 +273,13 @@ VSCODE_PID = 5785
 
 # Files
 
-all: mkdir main
+all: mkdir nginx systemd main
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
+ 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/8=0%
 
@@ -286,7 +290,6 @@ mkdir:
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
- 
 # @ := mkdir
 # automatic
 # % := 
@@ -304,7 +307,7 @@ mkdir:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=4/16=25%
-#  recipe to execute (from 'makefile', line 14):
+#  recipe to execute (from 'makefile', line 15):
 	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
 
 # Not a target:
@@ -316,7 +319,7 @@ mkdir:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-18 08:20:15.122109778
+#  Last modified 2022-05-20 22:57:00.813688808
 #  File has been updated.
 #  Successfully updated.
 
@@ -326,11 +329,16 @@ makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
+systemd:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 23):
+#  recipe to execute (from 'makefile', line 34):
 	rm -rf main main.o
 
 # Not a target:
@@ -343,30 +351,41 @@ main: main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 20):
+#  recipe to execute (from 'makefile', line 31):
 	$(CC) $(OBJS)/$< -lulfius -ljansson -lyder -o $@
 
 main.o: src/test.c
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 17):
+#  recipe to execute (from 'makefile', line 28):
 	$(CC) $(CFLAGS) -c $< -o $(OBJS)/$@
 
+nginx:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 18):
+	cd $(CONF) \
+	sudo mkdir --parents .$(NGINX) \
+	sudo cat nginx_config | sudo tee $(NGINX)/default \
+	sudo nginx -t \
+	sudo systemctl reload nginx.service
+
 # files hash-table stats:
-# Load=9/1024=1%, Rehash=0, Collisions=0/27=0%
+# Load=11/1024=1%, Rehash=0, Collisions=0/33=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 264 B / avg = 8 B
-# current buf: size = 8162 B / used = 264 B / count = 33 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 282 B / avg = 7 B
+# current buf: size = 8162 B / used = 282 B / count = 36 / avg = 7 B
 
-# strcache performance: lookups = 48 / hit rate = 31%
+# strcache performance: lookups = 55 / hit rate = 34%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/48=2%
-# Finished Make data base on Wed May 18 08:20:18 2022
+# Load=36/8192=0%, Rehash=0, Collisions=1/55=2%
+# Finished Make data base on Fri May 20 23:19:45 2022
 
  

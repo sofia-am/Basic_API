@@ -9,7 +9,7 @@ DEP = inc/dependencies.h
 WHERE = -Wl,-rpath,.
 CONF = config_files
 NGINX = /etc/nginx/conf.d
-all: mkdir nginx systemd main 
+all: mkdir nginx server.service main 
 #TODO: escribir los archivos de configuracion en las ubicaciones correspondientes
 mkdir:
 	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
