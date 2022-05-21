@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 20 23:19:45 2022
+# Make data base, printed on Fri May 20 23:52:20 2022
 
 # Variables
 
@@ -223,7 +223,7 @@ LC_NUMERIC = es_AR.UTF-8
 # automatic
 <F = $(notdir $<)
 # makefile (from 'makefile', line 11)
-NGINX = /etc/nginx/sites-available
+NGINX = /etc/nginx/conf.d
 # environment
 LC_MEASUREMENT = es_AR.UTF-8
 # environment
@@ -273,13 +273,12 @@ VSCODE_PID = 56496
 
 # Files
 
-all: mkdir nginx systemd main
+all: mkdir nginx server.service main
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
- 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/8=0%
 
@@ -319,7 +318,7 @@ mkdir:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-20 22:57:00.813688808
+#  Last modified 2022-05-20 23:51:45.889865166
 #  File has been updated.
 #  Successfully updated.
 
@@ -329,17 +328,25 @@ makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
-systemd:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 clean:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 34):
+#  recipe to execute (from 'makefile', line 38):
 	rm -rf main main.o
+
+server.service:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 25):
+	cd $(CONF) \
+	sudo cp $@ /etc/systemd/system \
+	sudo systemctl daemon-reload \
+	sudo systemctl enable $@ &\
+	sudo systemctl start $@ &\
+
 
 # Not a target:
 src/test.c:
@@ -351,14 +358,14 @@ main: main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 31):
+#  recipe to execute (from 'makefile', line 35):
 	$(CC) $(OBJS)/$< -lulfius -ljansson -lyder -o $@
 
 main.o: src/test.c
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 28):
+#  recipe to execute (from 'makefile', line 32):
 	$(CC) $(CFLAGS) -c $< -o $(OBJS)/$@
 
 nginx:
@@ -368,9 +375,10 @@ nginx:
 #  recipe to execute (from 'makefile', line 18):
 	cd $(CONF) \
 	sudo mkdir --parents .$(NGINX) \
-	sudo cat nginx_config | sudo tee $(NGINX)/default \
-	sudo nginx -t \
-	sudo systemctl reload nginx.service
+	sudo cp nginx_config.conf $(NGINX)\
+	sudo systemctl reload nginx.service & \
+	sudo systemctl restart nginx.service & \
+
 
 # files hash-table stats:
 # Load=11/1024=1%, Rehash=0, Collisions=0/33=0%
@@ -380,12 +388,12 @@ nginx:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 36 / storage = 282 B / avg = 7 B
-# current buf: size = 8162 B / used = 282 B / count = 36 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 289 B / avg = 8 B
+# current buf: size = 8162 B / used = 289 B / count = 36 / avg = 8 B
 
 # strcache performance: lookups = 55 / hit rate = 34%
 # hash-table stats:
 # Load=36/8192=0%, Rehash=0, Collisions=1/55=2%
-# Finished Make data base on Fri May 20 23:19:45 2022
+# Finished Make data base on Fri May 20 23:52:20 2022
 
  

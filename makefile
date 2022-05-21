@@ -9,7 +9,7 @@ DEP = inc/dependencies.h
 WHERE = -Wl,-rpath,.
 CONF = config_files
 NGINX = /etc/nginx/conf.d
-all: mkdir nginx server.service main 
+all: mkdir nginx server.service logrotate main 
 #TODO: escribir los archivos de configuracion en las ubicaciones correspondientes
 mkdir:
 	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
@@ -18,8 +18,8 @@ nginx:
 	cd $(CONF) \
 	sudo mkdir --parents .$(NGINX) \
 	sudo cp nginx_config.conf $(NGINX)\
-	sudo nginx -t \
-	sudo systemctl reload nginx.service
+	sudo systemctl reload nginx.service & \
+	sudo systemctl restart nginx.service & \
 
 server.service:
 	cd $(CONF) \
@@ -27,6 +27,12 @@ server.service:
 	sudo systemctl daemon-reload \
 	sudo systemctl enable $@ &\
 	sudo systemctl start $@ &\
+
+logrotate:
+	cd $(CONF) \
+	sudo cp log_config.log /etc/logrotate.d/ \
+	sudo chmod 644 /etc/logrotate.d/log_config.log \
+	chown root.root /etc/logrotate.d/log_config.log \
 
 main.o: $(SRC)/test.c
 	$(CC) $(CFLAGS) -c $< -o $(OBJS)/$@

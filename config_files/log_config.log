@@ -1,0 +1,7 @@
+/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/log/log_info.log{
+    rotate 5
+    daily
+    compress
+    missingok
+    notifiempty
+}

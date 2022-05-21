@@ -2,10 +2,18 @@ make --dry-run --keep-going --print-directory
 make: Entering directory '/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am'
 mkdir -p src bin lib obj inc
 cd config_files \
-sudo mkdir --parents ./etc/nginx/sites-available \
-sudo cat nginx_config | sudo tee /etc/nginx/sites-available/default \
-sudo nginx -t \
-sudo systemctl reload nginx.service
+sudo mkdir --parents ./etc/nginx/conf.d \
+sudo cp nginx_config.conf /etc/nginx/conf.d\
+sudo systemctl reload nginx.service & \
+sudo systemctl restart nginx.service & \
+
+cd config_files \
+sudo cp server.service /etc/systemd/system \
+sudo systemctl daemon-reload \
+sudo systemctl enable server.service &\
+sudo systemctl start server.service &\
+
+ 
 gcc  -g -Wall -pedantic -Wextra -std=gnu11 -Wconversion  -c src/test.c -o obj/main.o
 gcc  obj/main.o -lulfius -ljansson -lyder -o main
 make: Leaving directory '/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am'
