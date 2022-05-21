@@ -7,11 +7,26 @@ INC = inc
 LIB = lib
 DEP = inc/dependencies.h
 WHERE = -Wl,-rpath,.
-
-all: mkdir main
+CONF = config_files
+NGINX = /etc/nginx/conf.d
+all: mkdir nginx systemd main 
 #TODO: escribir los archivos de configuracion en las ubicaciones correspondientes
 mkdir:
 	mkdir -p $(SRC) $(BIN) $(LIB) $(OBJS) $(INC)
+
+nginx:
+	cd $(CONF) \
+	sudo mkdir --parents .$(NGINX) \
+	sudo cp nginx_config.conf $(NGINX)\
+	sudo nginx -t \
+	sudo systemctl reload nginx.service
+
+server.service:
+	cd $(CONF) \
+	sudo cp $@ /etc/systemd/system \
+	sudo systemctl daemon-reload \
+	sudo systemctl enable $@ &\
+	sudo systemctl start $@ &\
 
 main.o: $(SRC)/test.c
 	$(CC) $(CFLAGS) -c $< -o $(OBJS)/$@
