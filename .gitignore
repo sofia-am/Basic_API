@@ -2,6 +2,7 @@
 /ulfius
 /vcpkg
 /obj
+/log
 log_info.log
 dummy.c 
 TODO.md 

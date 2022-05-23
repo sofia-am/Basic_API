@@ -5,6 +5,8 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/main
+Restart=always
+ExecReload=/home/sofia/Documents/OperativosII/soii---2022---laboratorio-vi-sofia-am/main reload
 
 [Install]
 WantedBy=multi-user.target
